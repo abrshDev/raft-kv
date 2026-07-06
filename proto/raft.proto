@@ -1,0 +1,39 @@
+syntax = "proto3";
+package raft;
+option go_package = "github.com/yourusername/raft-kv/internal/raft";
+
+service Raft {
+    rpc RequestVote(RequestVoteArgs) returns (RequestVoteReply);
+    rpc AppendEntries(AppendEntriesArgs) returns (AppendEntriesReply);
+}
+
+message RequestVoteArgs {
+    int64 term          = 1;  // candidate's term
+    int32 candidate_id  = 2;  // who is asking for the vote
+    int64 last_log_index = 3; // index of candidate's last log entry
+    int64 last_log_term  = 4; // term of candidate's last log entry
+}
+
+message RequestVoteReply {
+    int64 term         = 1;  // current term (for candidate to update itself)
+    bool  vote_granted = 2;  // true = yes, I vote for you
+}
+
+message AppendEntriesArgs {
+    int64  term         = 1; // leader's term
+    int32  leader_id    = 2;
+    int64  prev_log_index = 3;
+    int64  prev_log_term  = 4;
+    repeated LogEntry entries = 5; // empty = heartbeat
+    int64  leader_commit = 6; // leader's commitIndex
+}
+
+message AppendEntriesReply {
+    int64 term    = 1;
+    bool  success = 2;
+}
+
+message LogEntry {
+    int64  term    = 1;
+    string command = 2; // serialized command, e.g. "SET foo bar"
+}
