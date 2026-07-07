@@ -3,8 +3,10 @@ package server
 import (
 	"encoding/json"
 	"net/http"
-	"raft-kv/internal/kvstore"
+
 	"strings"
+
+	"github.com/abrshDev/raft-kv/internal/kvstore"
 )
 
 type Server struct {
