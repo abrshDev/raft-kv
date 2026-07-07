@@ -3,8 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
-	"raft-kv/internal/kvstore"
-	"raft-kv/internal/server"
+
+	"github.com/abrshDev/raft-kv/internal/kvstore"
+	"github.com/abrshDev/raft-kv/internal/server"
 )
 
 func main() {
